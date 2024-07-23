@@ -3,6 +3,21 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
+const CopyPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+  // ...
+  plugins: [
+    // ...
+    new CopyPlugin({
+      patterns: [
+        { from: '_redirects', to: '' },
+        { from: "source/url/to/images/folder", to: "dest/url/to/images/folder" },
+      ],
+    }),
+  ],
+};
+
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
   const config = {
