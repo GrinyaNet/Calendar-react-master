@@ -1,12 +1,14 @@
-export const getWeekStartDate = (date) => {
-  const dateCopy = new Date(date);
-  const dayOfWeek = dateCopy.getDay();
+export const getWeekStartDate = (date, n) => {
+  const dateCopy = new Date(date);  
+  const dayOfWeek = dateCopy.getDay();  
   const difference =
     dayOfWeek === 0
       ? -6 // for Sunday
       : 1 - dayOfWeek;
 
-  const monday = new Date(dateCopy.setDate(date.getDate() + difference));
+      //console.log(difference);
+
+  const monday = new Date(dateCopy.setDate(date.getDate() + difference + n));
   return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
 };
 

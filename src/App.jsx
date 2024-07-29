@@ -9,15 +9,25 @@ import './common.scss';
 class App extends Component {
   state = {
     weekStartDate: new Date(),
+    dif: 0,
   };
+
+  difference = (n) => {
+    if (n === 0) {
+      this.setState({dif: n});
+    } else {
+this.setState({dif: this.state.dif + n});
+  }
+}
 
   render() {
     const { weekStartDate } = this.state;
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+    
+    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate, this.state.dif));
 
     return (
       <>
-        <Header />
+        <Header onClick={this.difference}/>
         <Calendar weekDates={weekDates} />
       </>
     );
