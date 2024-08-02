@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
+import Modal from './components/modal/Modal.jsx';
 
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
@@ -11,7 +12,7 @@ class App extends Component {
   state = {
     weekStartDate: new Date(),
     dif: 0,
-    
+    open: false,    
   };
 
   difference = (n) => {
@@ -23,6 +24,18 @@ this.setState({dif: this.state.dif + n});
   
 }
 
+clickOpen = () => {
+this.setState({
+  open: true
+})
+}
+
+clickClose = () => {
+  this.setState({
+    open: false
+  })
+}
+
 
   render() {
     const { weekStartDate } = this.state;
@@ -32,7 +45,8 @@ this.setState({dif: this.state.dif + n});
     
     return (
       <>
-        <Header onClick={this.difference}/>
+        <Header onClick={this.difference} onModal={this.clickOpen}/>
+        { this.state.open && (<Modal onModal={this.clickClose}/>)}
         <Calendar weekDates={weekDates} />
       </>
     );

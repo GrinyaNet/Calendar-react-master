@@ -28,11 +28,15 @@ import './header.scss';
   
 }
 
+openModal = () => {
+  this.props.onModal();
+}
+
 render() {
 
   return (
     <header className="header">
-      <button className="button create-event-btn">
+      <button className="button create-event-btn" onClick={this.openModal}>
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">
