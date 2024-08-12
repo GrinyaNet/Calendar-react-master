@@ -5,7 +5,9 @@ import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
 import events from '../../gateway/events';
 
+
 import './calendar.scss';
+
 
 class Calendar extends Component {
   state = {
@@ -22,6 +24,7 @@ class Calendar extends Component {
           <div className="calendar__week-container">
             <Sidebar />
             <Week weekDates={weekDates} events={this.state.events} />
+            
           </div>
         </div>
       </section>

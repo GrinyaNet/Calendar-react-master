@@ -20,6 +20,3 @@ const Navigation = ({ weekDates }) => {
 };
 
 export default Navigation;
-
-//{dayDate.getDate()}
-//dayDate.toISOString().split('T')[0]

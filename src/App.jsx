@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
+import events from './gateway/events.js';
+
 
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
@@ -12,7 +14,8 @@ class App extends Component {
   state = {
     weekStartDate: new Date(),
     dif: 0,
-    open: false,    
+    open: false,
+    newEvents: events,//1111
   };
 
   difference = (n) => {
@@ -36,17 +39,25 @@ clickClose = () => {
   })
 }
 
+onCreate = (value) => { 
+  const { newEvents }  = this.state;
+const updateTask = [...newEvents, value];
+this.setState({ newEvents: updateTask});
+alert(this.state.newEvents);
+}
+
+
 
   render() {
+    
     const { weekStartDate } = this.state;
     
     const weekDates = generateWeekRange(getWeekStartDate(weekStartDate, this.state.dif));
-
     
     return (
-      <>
+      <>      
         <Header onClick={this.difference} onModal={this.clickOpen}/>
-        { this.state.open && (<Modal onModal={this.clickClose}/>)}
+        { this.state.open && (<Modal onModal={this.clickClose} onCreate={this.onCreate}/>)}
         <Calendar weekDates={weekDates} />
       </>
     );
