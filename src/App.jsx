@@ -40,7 +40,8 @@ clickClose = () => {
 }
 
 onCreate = (value) => { 
-  const { newEvents }  = this.state;
+  
+const { newEvents }  = this.state;
 const updateTask = [...newEvents, value];
 this.setState({ newEvents: updateTask});
 alert(this.state.newEvents);

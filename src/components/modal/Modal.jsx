@@ -28,7 +28,8 @@ this.setState({
 
   }
 
-  handleTaskCreate = () => {
+  handleTaskCreate = (e) => {
+    e.preventDefault();
     const { title, date, startTime, endTime, description } = this.state;
     const startDate = "'" + date + 'T' + startTime + "'";
     const endDate = "'" + date + 'T' + endTime + "'";
@@ -92,7 +93,7 @@ this.setState({
                 className="event-form__field"                
                 onChange={this.handleChange}
               ></textarea>
-              <button type="submit" className="event-form__submit-btn" onClick={this.handleTaskCreate}>
+              <button type="submit" className="event-form__submit-btn" onClick={(e) => this.handleTaskCreate(e)}>
                 Create
               </button>
             </form>
