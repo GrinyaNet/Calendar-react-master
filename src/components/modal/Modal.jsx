@@ -1,42 +1,66 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import moment from 'moment';
 
 import './modal.scss';
+import events from '../../gateway/events';
 //import events from '../../gateway/events';
 
 
-class Modal extends Component {
- 
-   state = {          
+const Modal = ({ onModal, onCreate }) => {
+ const [event, setEvent] = useState(
+   {
       title: '',
       date: '',
       startTime: '',
       endTime: '',
-      description: '',     
-   }
-
-  closeModal = () => {
-    this.props.onModal();
+      description: '',
   }
 
-  handleChange = event => {
-    
-const { name, value} = event.target;
+ );
+  //  state = {          
+  //     title: '',
+  //     date: '',
+  //     startTime: '',
+  //     endTime: '',
+  //     description: '',     
+  //  }
 
-this.setState({  
-    [name]: value,   
-})
+  const closeModal = () => {
+    onModal();
+  }
+
+  const handleChange = (e) => {
+    const { name, value} = e.target; 
+    setEvent({
+      ...event, 
+        [name]: value,
+      
+  })
+    // setEvent({
+    //   [name]: value,
+
+    // })
+    //alert(event);
+//const { name, value} = event.target;
+
+// this.setState({  
+//     [name]: value,   
+// })
 
   }
 
-  handleTaskCreate = (e) => {
+ const handleTaskCreate = (e) => {
     e.preventDefault();
-    const { title, date, startTime, endTime, description } = this.state;
-    const startDate = "'" + date + 'T' + startTime + "'";
-    const endDate = "'" + date + 'T' + endTime + "'";
+    //const { title, date, startTime, endTime, description } = this.state;
+    //console.log(event.date);
+    const startDate = moment(`${event.date} ${event.startTime}`).toDate();
+    const endDate = moment(`${event.date} ${event.endTime}`).toDate();
+    //const startDate = "'" + event.date + 'T' + event.startTime + "'";
+    //const endDate = "'" + event.date + 'T' + event.endTime + "'";
     const events = {
       id: Math.random(),
-      title,
-      description,
+      title: event.title,
+      description: event.description,
       dateFrom: new Date(startDate),
       dateTo: new Date(endDate),
     }
@@ -48,52 +72,54 @@ this.setState({
     //alert(new Date(time));
     
     //alert(new Date('2024-08-10T12:08'));
-    this.props.onCreate(events);
+    onCreate(events);
     //this.props.onCreate(this.state.events);
+    //console.log(events);
+    onModal();
   }
 
-  render() {    
+  //render() {    
   
     return (
       <div className="modal overlay">
         <div className="modal__content">
           <div className="create-event">
-            <button className="create-event__close-btn" onClick={this.closeModal}>+</button>
+            <button className="create-event__close-btn" onClick={closeModal}>+</button>
             <form className="event-form">
               <input
                 type="text"
                 name="title"
                 placeholder="Title"
-                value={this.state.title}
+                value={event.title}
                 className="event-form__field"                                
-                onChange={this.handleChange}
+                onChange={handleChange}
               />
               <div className="event-form__time">
-                <input type="date" name="date" value={this.state.date} className="event-form__field" onChange={this.handleChange}/>
+                <input type="date" name="date" value={event.date} className="event-form__field" onChange={handleChange}/>
                 <input
                   type="time"
                   name="startTime"
-                  value={this.state.startTime}
+                  value={event.startTime}
                   className="event-form__field"                  
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
                 <span>-</span>
                 <input
                   type="time"
                   name="endTime"
-                  value={this.state.endTime}
+                  value={event.endTime}
                   className="event-form__field"                  
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
               </div>
               <textarea
                 name="description"
                 placeholder="Description"
-                value={this.state.description}
+                value={event.description}
                 className="event-form__field"                
-                onChange={this.handleChange}
+                onChange={handleChange}
               ></textarea>
-              <button type="submit" className="event-form__submit-btn" onClick={(e) => this.handleTaskCreate(e)}>
+              <button type="submit" className="event-form__submit-btn" onClick={(e) => handleTaskCreate(e)}>
                 Create
               </button>
             </form>
@@ -101,7 +127,7 @@ this.setState({
         </div>
       </div>
     );
-  }
+  //}
 }
 
 export default Modal;
