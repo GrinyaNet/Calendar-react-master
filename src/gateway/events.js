@@ -1,4 +1,6 @@
-const events = [
+const baseUrl = 'https://669781f802f3150fb66de387.mockapi.io/users';
+
+export const events = [
   {
     id: 1,
     title: 'Go to the gym',
@@ -36,4 +38,27 @@ const events = [
   },  
 ];
 
-export default events;
+//export default events;
+export const createTask = eventsData => {
+  return fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(eventsData),
+  }).then(responce => {
+    if (!responce.ok) {
+      throw new Error('Faild to create task');
+    }
+  });
+};
+
+export const fetchTasksList = () => {
+  return fetch(baseUrl)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(tasksList => tasksList.map(({ _id, ...task }) => ({ id: _id, ...task })));
+};

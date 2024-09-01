@@ -5,41 +5,24 @@ import './header.scss';
 
 const Header = ({onClick, onModal}) => {
   const [date, setDate] = useState(new Date());
-  const [shift, setShift] = useState(monthShift(new Date(), 0));
-  //console.log(shift);
-
-  // class Header extends Component {
-    
-  //  state = {
-  //   date: new Date(),
-  //   shift: monthShift(new Date(), 0),
-  //  }    
+  const [shift, setShift] = useState(monthShift(new Date(), 0));    
    
-  const navClick = (d) => {
-  //alert(d);
+  const navClick = (d) => {  
   let [firstDay, lastDay, newMonth, currDate] = monthShift(date, d);
- // let [firstDay, lastDay, newMonth, currDate] = monthShift(this.state.date, d);
    
-  //  this.setState({
-  //   date: currDate,
-  //   shift: monthShift(this.state.date, d),
-   
-  // })
-  setDate(currDate);
-  //alert(date);
+ 
+  setDate(currDate);  
   setShift(monthShift(date, d));
-  //this.props.onClick(d);
+  
   onClick(d);
    alert(monthShift(date, d));
   
 }
 
 const openModal = () => {
-  //this.props.onModal();
+  
   onModal();
 }
-
-//render() {
   
   return (
     
@@ -63,8 +46,5 @@ const openModal = () => {
     </header>
   );
 };
-//};
 
 export default Header;
-
-//{months[this.state.shift[2] + 1]

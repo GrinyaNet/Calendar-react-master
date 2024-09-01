@@ -4,7 +4,8 @@ import moment from 'moment';
 import './modal.scss';
 import events from '../../gateway/events';
 //import events from '../../gateway/events';
-
+import {createTask} from '../../gateway/events';
+const baseUrl = 'https://669781f802f3150fb66de387.mockapi.io/users';
 
 const Modal = ({ onModal, onCreate }) => {
  const [event, setEvent] = useState(
@@ -16,14 +17,7 @@ const Modal = ({ onModal, onCreate }) => {
       description: '',
   }
 
- );
-  //  state = {          
-  //     title: '',
-  //     date: '',
-  //     startTime: '',
-  //     endTime: '',
-  //     description: '',     
-  //  }
+ );  
 
   const closeModal = () => {
     onModal();
@@ -33,53 +27,48 @@ const Modal = ({ onModal, onCreate }) => {
     const { name, value} = e.target; 
     setEvent({
       ...event, 
-        [name]: value,
-      
-  })
-    // setEvent({
-    //   [name]: value,
-
-    // })
-    //alert(event);
-//const { name, value} = event.target;
-
-// this.setState({  
-//     [name]: value,   
-// })
+        [name]: value,      
+  })    
 
   }
 
  const handleTaskCreate = (e) => {
-    e.preventDefault();
-    //const { title, date, startTime, endTime, description } = this.state;
-    //console.log(event.date);
-    const startDate = moment(`${event.date} ${event.startTime}`).toDate();
+    e.preventDefault();    
+    
+    const startDate = moment(`${event.date} ${event.startTime}`).toDate();    
     const endDate = moment(`${event.date} ${event.endTime}`).toDate();
-    //const startDate = "'" + event.date + 'T' + event.startTime + "'";
-    //const endDate = "'" + event.date + 'T' + event.endTime + "'";
-    const events = {
-      id: Math.random(),
+    
+    const events = {      
       title: event.title,
-      description: event.description,
-      dateFrom: new Date(startDate),
+      description: event.description,      
+      dateFrom: new Date(startDate),      
       dateTo: new Date(endDate),
     }
-    //let str1 = str.replace(/[-,:]/g, ',');
+        
+//--
+createTask(events);
+//--
+    // ////
+    // fetch(baseUrl, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(events),
+    // }).then(responce => {
+    //   if (!responce.ok) {
+    //     throw new Error('Faild to create task');
+    //   }
+    // });
+    // /////
     
-    
-    //let newDate = new Date('2024-08-10T12:08');
-    //let a = newDate.setMonth(newDate.getMonth() - 1);
-    //alert(new Date(time));
-    
-    //alert(new Date('2024-08-10T12:08'));
-    onCreate(events);
-    //this.props.onCreate(this.state.events);
-    //console.log(events);
+    onCreate();
+    //onCreate(events);
+        
     onModal();
   }
 
-  //render() {    
-  
+    
     return (
       <div className="modal overlay">
         <div className="modal__content">
@@ -127,10 +116,7 @@ const Modal = ({ onModal, onCreate }) => {
         </div>
       </div>
     );
-  //}
+  
 }
 
 export default Modal;
-
-//value={formData.date}
-//onChange={e => setFormData({ ...formData, date: e.target.value })}

@@ -1,78 +1,74 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
-import events from './gateway/events.js';
+//import events from './gateway/events.js';
+import {fetchTasksList} from './gateway/events.js';
 
 
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
+//import events from './gateway/events.js';
 
-// class App extends Component {
+//const baseUrl = 'https://669781f802f3150fb66de387.mockapi.io/users';
+
  const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
   const [dif, setDif] = useState(0);
   const [open, setOpen] = useState(false);
-  const [newEvents, setNewEvents] = useState(events);
-  //const [event, setEvent] = use
-  //const [open, setOpen] = useState(false);
-  // state = {
-  //   weekStartDate: new Date(),
-  //   dif: 0,
-  //   open: false,
-  //   newEvents: events,//1111
-  // };
+  const [newEvents, setNewEvents] = useState([]);
+  //const [newEvents, setNewEvents] = useState(events);
 
+  useEffect( () => {onCreate()}, []);
+
+  
   const difference = (n) => {
-    //alert(n);
+    
     if (n === 0) {
-      //this.setState({dif: n});
+      
       setDif(n);
     } else {
-//this.setState({dif: this.state.dif + n});
-//alert(dif);
-//let a = dif + n;
-//alert(a);
 setDif(dif + n);
-//alert(dif);
+
   }
   
 }
 
 const clickOpen = () => {
   setOpen(true);
-// this.setState({
-//   open: true
-// })
+
 }
 
 const clickClose = () => {
   setOpen(false);
-  // this.setState({
-  //   open: false
-  // })
+  
 }
 
-const onCreate = (value) => { 
-  //alert(value);
- // console.log(value);
-//const { newEvents }  = this.state;
-const updateTask = [...newEvents, value];
-//this.setState({ newEvents: updateTask});
-setNewEvents(updateTask);
-//alert(newEvents);
-console.log(updateTask);
-}
+const onCreate = () => {
+  fetchTasksList()
+  .then(events => setNewEvents(events));
 
-
-
-  //render() {
+//const onCreate = (value) => { 
+//const updateTask = [...newEvents, value];
+//setNewEvents(updateTask);
+//console.log(updateTask);
+// //-----
+// fetch(baseUrl)
+//     .then(res => {
+//       if (res.ok) {
+//         return res.json();
+//       }
+//     })    
+//     .then(eventsList => {const events = eventsList.map(({ _id, ...event }) => ({ id: _id, ...event }));
+//     setNewEvents(events);
+// });
     
-    //const { weekStartDate } = this.state;
-    
-    //const weekDates = generateWeekRange(getWeekStartDate(weekStartDate, this.state.dif));
+//----
+
+}   
+    console.log(newEvents);
     const weekDates = generateWeekRange(getWeekStartDate(weekStartDate, dif));
     
     return (
@@ -83,6 +79,5 @@ console.log(updateTask);
       </>
     );
   }
-//}
 
 export default App;
