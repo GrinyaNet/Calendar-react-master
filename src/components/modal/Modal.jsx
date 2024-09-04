@@ -37,13 +37,25 @@ const Modal = ({ onModal, onCreate }) => {
     
     const startDate = moment(`${event.date} ${event.startTime}`).toDate();    
     const endDate = moment(`${event.date} ${event.endTime}`).toDate();
-    
+
+    console.log(startDate);
+    const a = startDate.getTime();
+    console.log(a);
+    console.log(new Date(a));
+
     const events = {      
       title: event.title,
       description: event.description,      
-      dateFrom: new Date(startDate),      
-      dateTo: new Date(endDate),
+      dateFrom: startDate.getTime(),      
+      dateTo: endDate.getTime(),
     }
+    
+    // const events = {      
+    //   title: event.title,
+    //   description: event.description,      
+    //   dateFrom: new Date(startDate),      
+    //   dateTo: new Date(endDate),
+    // }
         
 //--
 createTask(events);

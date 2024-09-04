@@ -49,6 +49,7 @@ const clickClose = () => {
 const onCreate = () => {
   fetchTasksList()
   .then(events => setNewEvents(events));
+  //.then(events => setNewEvents(events));
 
 //const onCreate = (value) => { 
 //const updateTask = [...newEvents, value];

@@ -60,5 +60,7 @@ export const fetchTasksList = () => {
         return res.json();
       }
     })
-    .then(tasksList => tasksList.map(({ _id, ...task }) => ({ id: _id, ...task })));
+    .then(tasksList => tasksList.map(({ _id, ...task }) => ({ id: _id, ...task })))
+    .then(tasksList => tasksList.map(({ dateFrom, ...task }) => ({ dateFrom: new Date(dateFrom), ...task })))
+    .then(tasksList => tasksList.map(({ dateTo, ...task }) => ({ dateTo: new Date(dateTo), ...task })));
 };
