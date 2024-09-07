@@ -38,10 +38,10 @@ const Modal = ({ onModal, onCreate }) => {
     const startDate = moment(`${event.date} ${event.startTime}`).toDate();    
     const endDate = moment(`${event.date} ${event.endTime}`).toDate();
 
-    console.log(startDate);
-    const a = startDate.getTime();
-    console.log(a);
-    console.log(new Date(a));
+    // console.log(startDate);
+    // const a = startDate.getTime();
+    // console.log(a);
+    // console.log(new Date(a));
 
     const events = {      
       title: event.title,
